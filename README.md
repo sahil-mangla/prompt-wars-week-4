@@ -235,13 +235,34 @@ matchmind/
 └── next.config.mjs                # Security headers (CSP, X-Frame-Options)
 ```
 
-## Testing
+## Testing & Production Verification
 
-Extensive frontend and backend testing is included (using Jest and React Testing Library) to ensure components render correctly and securely per workflow standards:
+Stricter automated checks are enforced locally and on every GitHub push using Jest, React Testing Library, and GitHub Actions to ensure 100% reliability for production deployment.
+
+### 1. Automated CI/CD Pipeline
+Every push or pull request to the `main` branch automatically triggers the GitHub Actions CI pipeline (`.github/workflows/ci.yml`), executing:
+* **`npm ci`**: Validates dependency locking and integrity.
+* **`npm run lint`**: Inspects syntax correctness and layout rules.
+* **`npm test`**: Runs the complete backend and frontend Jest test suites in isolation.
+* **`npm run build`**: Compiles the Next.js production bundle, catching compile-time type, SSR, or dynamic import errors.
+
+### 2. Frontend Test Suites (`tests/frontend/`)
+Verifies interactive React components, state changes, and accessibility controls:
+* **Operator Console (`operator.test.js`)**: Tests simulation status triggers, live telemetry grids, approval modal controls, and state syncing.
+* **Fan Companion App (`fan.test.js`)**: Verifies Arabic/English translation toggles, wheelchair-accessibility toggles, SVG detour rendering, and Google Maps redirect coordinates.
+* **Volunteer Portal (`volunteer.test.js`)**: Verifies task briefings, Portuguese/English dynamic text rendering, and task acceptance status updates.
+
+### 3. Backend API & Security Test Suites (`tests/api/` & `tests/security/`)
+Ensures secure request routing, data parsing, and Gemini API proxy safety:
+* **System Health (`health.test.js`)**: Validates health check endpoints, configuration flags, and active sync modes.
+* **AI Analysis (`analyze.test.js`)**: Tests SentinelAI telemetry analysis formatting, response JSON validation, and stable fallback handlers.
+* **Operational Security (`api-security.test.js`)**: Enforces safety constraints including input character sanitization (truncation), preventing prompt injection vectors, CORS verification, and server key isolation.
+
+### 4. Running the Tests Locally
+Execute the following command to run all test suites in band:
 ```bash
 npm run test
 ```
-This executes all unit and security tests ensuring production readiness.
 
 ---
 
