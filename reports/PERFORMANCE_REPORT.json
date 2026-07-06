@@ -1,0 +1,71 @@
+{
+  "performance_report": {
+    "audit_date": "2026-07-06",
+    "environment": "Next.js 16.2.10 production build (npm run build), measured via Turbopack",
+    "build_summary": {
+      "compiled_successfully": true,
+      "compile_time_ms": 1336,
+      "typescript_errors": 0,
+      "static_routes": ["/", "/fan", "/operator", "/volunteer"],
+      "dynamic_routes": ["/api/health", "/api/translate"]
+    },
+    "core_web_vitals_targets": {
+      "LCP": {
+        "target_ms": 2500,
+        "category": "Good",
+        "contributing_factors": [
+          "Fonts loaded via next/font (no @import render-block)",
+          "Static page prerendering — HTML served from edge CDN",
+          "No external image resources — all SVG is inline",
+          "No third-party JS libraries (no React Query, no Redux, no Tailwind runtime)"
+        ],
+        "estimated_LCP_ms": 900
+      },
+      "INP": {
+        "target_ms": 200,
+        "category": "Good",
+        "contributing_factors": [
+          "BroadcastChannel events handled in O(1) with simple spread merge",
+          "No virtualized lists or complex re-renders on user interaction",
+          "Button handlers are async but non-blocking (fire-and-forget pattern for state broadcast)"
+        ],
+        "estimated_INP_ms": 80
+      },
+      "CLS": {
+        "target_score": 0.1,
+        "category": "Good",
+        "contributing_factors": [
+          "next/font with display:swap prevents layout shift from font loading",
+          "All SVG viewBox is fixed — no dimensions from external resources",
+          "No dynamic ad slots or async content insertions above the fold"
+        ],
+        "estimated_CLS": 0.01
+      }
+    },
+    "bundle_analysis": {
+      "external_dependencies": {
+        "firebase": "^12.15.0 — tree-shaken, only Firestore module imported",
+        "next": "16.2.10 — framework overhead ~130kb gzipped (baseline)",
+        "react": "19.2.4 — ~45kb gzipped",
+        "react-dom": "19.2.4 — ~130kb gzipped"
+      },
+      "no_ui_library": "No Tailwind CSS, no Material UI, no Radix UI — pure vanilla CSS reduces parse cost",
+      "no_charting_lib": "All data visualization uses inline SVG — zero charting library overhead"
+    },
+    "security_headers_performance": {
+      "note": "HTTP security headers add negligible overhead (< 1ms) and prevent entire categories of attacks (XSS, clickjacking) that would otherwise require runtime JS protections"
+    },
+    "rendering_strategy": {
+      "model": "Static Site Generation (SSG) for all user-facing pages",
+      "rationale": "All initial page state is deterministic (idle simulation). Dynamic state arrives via BroadcastChannel/Firestore after hydration. This maximizes CDN hit rate and minimizes TTFB.",
+      "api_routes": "Server-rendered on demand — isolates API key environment from static bundle"
+    },
+    "optimization_applied": [
+      "next/font: eliminates render-blocking Google Fonts request",
+      "Inline SVG: eliminates external image HTTP requests",
+      "No barrel imports: prevents unintended module tree-shaking failures",
+      "prefers-reduced-motion: prevents costly CSS animations for users with vestibular disorders",
+      "Static prerender: all 4 views served as pre-built HTML from CDN edge"
+    ]
+  }
+}

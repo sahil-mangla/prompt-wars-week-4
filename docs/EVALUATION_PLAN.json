@@ -1,0 +1,105 @@
+{
+  "project": "MatchMind",
+  "version": "1.1",
+  "evaluation_metrics": [
+    {
+      "metric_id": "detection_lead_time",
+      "name": "Incident Detection Lead Time",
+      "description": "The amount of time before a crowd incident occurs that the system detects and generates an alert.",
+      "unit": "minutes",
+      "baseline_from_papers": {
+        "value": 0,
+        "citation": "mdpi2024crowdbehavior",
+        "context": "Traditional stadium operations are purely reactive, identifying crowd surges or bottlenecks only after congestion has already formed or physical alerts are raised."
+      },
+      "target": {
+        "value": 35.0,
+        "condition": "Confidence >= 75%"
+      },
+      "verification_method": {
+        "type": "simulated_event_assertion",
+        "description": "Run the Mesa crowd simulation framework or deterministic telemetry playback and measure the timestamp difference between the system-generated alert and the actual peak congestion state at Gate 7."
+      }
+    },
+    {
+      "metric_id": "dispatch_response_delay",
+      "name": "Operator-to-Volunteer Dispatch Latency",
+      "description": "The latency from the moment the operator approves an action to when the role-aware multilingual task is delivered to the ground volunteer's mobile web device.",
+      "unit": "seconds",
+      "baseline_from_papers": {
+        "value": 480.0,
+        "citation": "baytech2025detection",
+        "context": "Manual radio/dispatch coordination takes on average 8 minutes during peak event windows due to busy channels, translation delay, and verbal descriptions."
+      },
+      "target": {
+        "value": 5.0,
+        "condition": "Network latency <= 500ms"
+      },
+      "verification_method": {
+        "type": "latency_logging",
+        "description": "Measure latency by comparing Firestore document timestamp of operator approval with the device receive confirmation logged in the database."
+      }
+    },
+    {
+      "metric_id": "fan_rerouting_adoption",
+      "name": "Active Fan Rerouting Adoption Rate",
+      "description": "The percentage of fans en route to a congested zone who select an alternative recommended route after receiving a proactive nudge.",
+      "unit": "percentage",
+      "baseline_from_papers": {
+        "value": 15.0,
+        "citation": "milan2025llmcrowd",
+        "context": "Static stadium signs and standard navigation apps result in less than 15% of fans adopting secondary routes, as they default to visible queues."
+      },
+      "target": {
+        "value": 40.0
+      },
+      "verification_method": {
+        "type": "simulated_agent_decision",
+        "description": "Run a test suite of 100 simulated fan agents en route to Gate 7, send the detour nudge, and verify that at least 40% change their coordinate pathing in Mesa."
+      }
+    },
+    {
+      "metric_id": "multilingual_accuracy",
+      "name": "Context-Aware Instruction Accuracy",
+      "description": "Expert evaluation of LLM-generated translations of roles, situational scripts, and safety commands.",
+      "unit": "percentage",
+      "baseline_from_papers": {
+        "value": 72.0,
+        "citation": "arxiv2024humanloop",
+        "context": "Off-the-shelf automated machine translation engines fail to translate venue-specific jargon (e.g., 'Gate Marshal C7', 'soft perimeter') accurately in localized dialects."
+      },
+      "target": {
+        "value": 95.0
+      },
+      "verification_method": {
+        "type": "llm_as_a_judge",
+        "description": "Cross-validate LLM-generated translations using a secondary LLM validator prompted with specialized dictionary constraints for stadium terminology."
+      }
+    },
+    {
+      "metric_id": "accessibility_availability",
+      "name": "Accessibility Route Recalculation Time",
+      "description": "The time required to compute and push an alternative wheelchair-accessible route once an active path is flagged as blocked.",
+      "unit": "seconds",
+      "baseline_from_papers": {
+        "value": 600.0,
+        "citation": "lpf2025accessibility",
+        "context": "Disabled fans wait an average of 10 minutes to resolve blockages because they must wait for staff interaction or search for an elevator manually."
+      },
+      "target": {
+        "value": 30.0
+      },
+      "verification_method": {
+        "type": "mock_route_interruption",
+        "description": "Inject a simulated blockage on an elevator route, trigger recalculation, and verify that a new valid ADA-compliant path is pushed to the client."
+      }
+    }
+  ],
+  "verification_protocol": {
+    "step_1": "Setup simulation environment with Mesa and preset scenarios.",
+    "step_2": "Run test script `npm run test:eval` which injects crowd sensors data to Firebase.",
+    "step_3": "Measure SentinelAI prediction confidence intervals using cross-validation over the generated data.",
+    "step_4": "Record dispatch times and fan routing decisions in Firebase metrics logs.",
+    "step_5": "Verify target metrics are achieved and compile performance report."
+  }
+}

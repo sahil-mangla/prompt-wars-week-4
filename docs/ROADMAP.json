@@ -1,0 +1,200 @@
+{
+  "roadmap": [
+    {
+      "task_id": "task_1",
+      "component_name": "Design System & CSS Tokens",
+      "subparts": [
+        {
+          "subpart_id": "1_1",
+          "description": "Define OKLCH/HSL color tokens in :root and [data-theme='dark']",
+          "deliverable": "globals.css with verified custom properties",
+          "verification_step": "Browser DevTools computed styles show OKLCH values parsing correctly"
+        },
+        {
+          "subpart_id": "1_2",
+          "description": "Fluid typography scale using clamp() from xs to display",
+          "deliverable": "--text-* tokens using clamp()",
+          "verification_step": "Resize viewport from 320px to 1440px — no font size layout shifts"
+        },
+        {
+          "subpart_id": "1_3",
+          "description": "Enforce impeccable design bans: no ghost-cards, no gradient text, no numbered headers, no emoji icons",
+          "deliverable": "Audit checklist verified in code review",
+          "verification_step": "Search codebase for box-shadow+border combos on .card, background-clip:text, sequential h2 numbering"
+        },
+        {
+          "subpart_id": "1_4",
+          "description": "prefers-reduced-motion override for all animations including .alert-pulse",
+          "deliverable": "@media (prefers-reduced-motion: reduce) block disabling animations",
+          "verification_step": "Enable OS reduced motion preference → alert-pulse animation stops"
+        }
+      ],
+      "verification_gate": "npm run build passes 0 errors; CSS tokens render correctly in Chromium"
+    },
+    {
+      "task_id": "task_2",
+      "component_name": "SentinelAI Signal Engine",
+      "subparts": [
+        {
+          "subpart_id": "2_1",
+          "description": "Signal weight constants for 5 sensor streams (flow, scans, sentiment, weather, historical)",
+          "deliverable": "SIGNAL_WEIGHTS object summing to 1.0",
+          "verification_step": "Unit test: weights sum is 1.0 ± 0.001"
+        },
+        {
+          "subpart_id": "2_2",
+          "description": "calculateConfidence() with cross-validation penalty (<3 signals → 0.5x) and bonus (>=4 signals → 1.1x)",
+          "deliverable": "calculateConfidence() function exported from simulation-engine.js",
+          "verification_step": "Unit test matrix: 2 signals → confidence < 50%; 5 signals at max → confidence >= 80%"
+        },
+        {
+          "subpart_id": "2_3",
+          "description": "triggerGate7Surge() manual override for demo scenario",
+          "deliverable": "Deterministic injection of Gate 7 surge state",
+          "verification_step": "Click 'Inject Gate 7 Surge' → state.simulationStatus === 'predicting' within 1s"
+        }
+      ],
+      "verification_gate": "calculateConfidence test suite passes; manual surge trigger produces confidence >= 75%"
+    },
+    {
+      "task_id": "task_3",
+      "component_name": "Real-time State Synchronization",
+      "subparts": [
+        {
+          "subpart_id": "3_1",
+          "description": "LocalSyncManager: BroadcastChannel message handler + localStorage persistence",
+          "deliverable": "LocalSyncManager class in firebase.js",
+          "verification_step": "Open operator + fan tabs → trigger surge in one → other updates within 500ms"
+        },
+        {
+          "subpart_id": "3_2",
+          "description": "Late-joining tab hydration from localStorage",
+          "deliverable": "Constructor reads localStorage on init",
+          "verification_step": "Trigger surge → open /volunteer in new tab → volunteer sees active task immediately"
+        },
+        {
+          "subpart_id": "3_3",
+          "description": "Firebase Firestore integration with LocalSync fallback",
+          "deliverable": "syncStore.subscribeState() works with or without Firebase credentials",
+          "verification_step": "Without .env.local: LocalSync mode. With .env.local: Firestore real-time updates"
+        }
+      ],
+      "verification_gate": "Cross-tab state propagation verified in browser; late-join hydration works for all 3 views"
+    },
+    {
+      "task_id": "task_4",
+      "component_name": "Operator Command Dashboard (/operator)",
+      "subparts": [
+        {
+          "subpart_id": "4_1",
+          "description": "3-column responsive layout (telemetry | SentinelAI | volunteers)",
+          "deliverable": ".grid-3 CSS class applied",
+          "verification_step": "Mobile 375px: stacks vertically. Desktop 1200px: 3 columns (1fr 1.5fr 1fr)"
+        },
+        {
+          "subpart_id": "4_2",
+          "description": "ConfidenceBar meter component with ARIA role='meter'",
+          "deliverable": "ConfidenceBar component with color-coded bar and aria attributes",
+          "verification_step": "Screen reader announces 'SentinelAI confidence score: 81%' on alert activation"
+        },
+        {
+          "subpart_id": "4_3",
+          "description": "Approve dispatch → multilingual volunteer task assignment",
+          "deliverable": "handleApproveDispatch() updates volunteer tasks in Portuguese and Spanish",
+          "verification_step": "Click Approve → Maria's task.title === 'Direcionar Fluxo do Portão 7 para Portão 7B'"
+        }
+      ],
+      "verification_gate": "Full E2E demo flow: Surge inject → Alert panel → Approve dispatch → Volunteer notified"
+    },
+    {
+      "task_id": "task_5",
+      "component_name": "Volunteer Mobile Portal (/volunteer)",
+      "subparts": [
+        {
+          "subpart_id": "5_1",
+          "description": "Mobile-first layout (max-width: 420px) with 48px touch targets",
+          "deliverable": "All buttons have min-height: 48px",
+          "verification_step": "Mobile Chrome DevTools: all interactive elements >= 48px"
+        },
+        {
+          "subpart_id": "5_2",
+          "description": "Portuguese-localized emergency task card with dispatch timestamp from state",
+          "deliverable": "Task timestamp reads from state.activeIncidents[0].timestamp",
+          "verification_step": "Dispatch time shown matches operator approve time, not browser clock"
+        },
+        {
+          "subpart_id": "5_3",
+          "description": "Sustainability eco-tip on volunteer task card",
+          "deliverable": "Eco tip showing HVAC energy savings from crowd redirection",
+          "verification_step": "Task card renders eco tip when maria.task is not null"
+        }
+      ],
+      "verification_gate": "Maria's flow: Notified → Confirm position → Mark complete → Operator log updated"
+    },
+    {
+      "task_id": "task_6",
+      "component_name": "Fan Companion App (/fan)",
+      "subparts": [
+        {
+          "subpart_id": "6_1",
+          "description": "Arabic RTL layout with language toggle (AR/EN)",
+          "deliverable": "direction: rtl applied to wrapper div when language === 'ar'",
+          "verification_step": "Switch to AR → layout mirrors, text is right-aligned"
+        },
+        {
+          "subpart_id": "6_2",
+          "description": "Dynamic SVG routing map with incident-aware path switching",
+          "deliverable": "Green detour path (Gate 7B) replaces blue direct path on incident",
+          "verification_step": "Trigger surge → SVG shows red dashed Gate 7 + green bold Gate 7B path"
+        },
+        {
+          "subpart_id": "6_3",
+          "description": "Transport tab: shuttle/metro wait times with eco-friendly flags",
+          "deliverable": "SHUTTLE_STATUS array rendered as cards with wait time color coding",
+          "verification_step": "Transport tab renders 3 shuttle options with wait times < 5min in green"
+        },
+        {
+          "subpart_id": "6_4",
+          "description": "Eco tab: sustainability metrics (renewable energy %, waste recycled %, transit usage %)",
+          "deliverable": "3 stadium sustainability KPI cards",
+          "verification_step": "Eco tab renders and metrics are displayed with correct color coding"
+        }
+      ],
+      "verification_gate": "All 3 tabs render; Arabic RTL correct; detour alert fires on dispatch; accessibility toggle changes SVG"
+    },
+    {
+      "task_id": "task_7",
+      "component_name": "Security & API Layer",
+      "subparts": [
+        {
+          "subpart_id": "7_1",
+          "description": "GEMINI_API_KEY server-side only (no NEXT_PUBLIC_ prefix)",
+          "deliverable": "POST /api/translate route.js using process.env.GEMINI_API_KEY",
+          "verification_step": "grep for NEXT_PUBLIC_GEMINI in codebase returns 0 results"
+        },
+        {
+          "subpart_id": "7_2",
+          "description": "Security HTTP headers (CSP, X-Frame-Options, X-XSS-Protection)",
+          "deliverable": "next.config.mjs headers() function",
+          "verification_step": "curl -I http://localhost:3000 shows X-Frame-Options: DENY"
+        },
+        {
+          "subpart_id": "7_3",
+          "description": "Input sanitization in /api/translate (length limit, supported lang allowlist)",
+          "deliverable": "MAX_TEXT_LENGTH = 2000, SUPPORTED_LANGUAGES allowlist",
+          "verification_step": "POST with 10000 char text: truncated to 2000. POST with unknown lang: 400 error"
+        }
+      ],
+      "verification_gate": "Security headers present; Gemini key not in client bundle; input validation tested"
+    }
+  ],
+  "critical_path": [
+    "design-tokens",
+    "signal-engine",
+    "state-sync",
+    "operator-dashboard",
+    "volunteer-portal",
+    "fan-portal",
+    "security-layer"
+  ]
+}
