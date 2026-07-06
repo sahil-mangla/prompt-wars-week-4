@@ -1,0 +1,19 @@
+# Firebase App Hosting configuration file.
+# Learn more: https://firebase.google.com/docs/app-hosting/configure
+
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+
+env:
+  - variable: GEMINI_MODEL
+    value: gemini-2.5-flash
+  - variable: GEMINI_API_KEY
+    secret: GEMINI_API_KEY
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: mock_firebase_api_key_for_local_testing
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: mock_project_id

@@ -251,21 +251,6 @@ This executes all unit and security tests ensuring production readiness.
 
 ---
 
-## Workflow Compliance
-
-Built following `research_informed_hackathon_workflow_v4.yaml` (all 12 stages):
-
-- Stage 2 → [`PAPER_REFERENCES.bib`](./reports/PAPER_REFERENCES.bib)
-- Stage 4 → [`EVALUATION_PLAN.json`](./reports/EVALUATION_PLAN.json)
-- Stage 5 → [`TECH_STACK.json`](./docs/TECH_STACK.json)
-- Stage 6 → [`DESIGN_SYSTEM.md`](./design-system/DESIGN_SYSTEM.md)
-- Stage 7 → [`ROADMAP.json`](./docs/ROADMAP.json)
-- Stage 8 → [`A11Y_REPORT.json`](./reports/A11Y_REPORT.json)
-- Stage 9 → [`CHECKLISTS.json`](./reports/CHECKLISTS.json)
-- Stage 10 → [`PERFORMANCE_REPORT.json`](./reports/PERFORMANCE_REPORT.json)
-- Stage 11 → [`PROJECT_BRIEF.md`](./docs/PROJECT_BRIEF.md)
-- Stage 12 → [`QA_REPORT.json`](./reports/QA_REPORT.json)
-
 ---
 
 ## License
