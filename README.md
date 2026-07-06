@@ -148,16 +148,24 @@ Open [http://localhost:3000](http://localhost:3000)
 Edit `.env.local`:
 
 ```bash
-# Firebase (browser-safe — NEXT_PUBLIC_ prefix is required)
-NEXT_PUBLIC_FIREBASE_API_KEY=your_key
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-# ... see .env.example for full list
-
 # Gemini API (server-side ONLY — never add NEXT_PUBLIC_ prefix)
 GEMINI_API_KEY=your_gemini_key
 ```
 
-> **Note:** The app runs in **LocalSync mode** without Firebase credentials, using BroadcastChannel + localStorage for cross-tab state sync. All demo features work without any API keys.
+> **Note:** The app runs in **LocalSync mode** by default without Firebase credentials, using BroadcastChannel + localStorage for real-time cross-tab state sync. This avoids blocked client-side requests and works out-of-the-box.
+
+---
+
+### Vercel Deployment (100% Free)
+
+Since MatchMind runs server-side Next.js API routes (`/api/analyze`, `/api/translate`) to request GenAI insights safely, it is fully optimized to deploy to **Vercel** with one click for free:
+
+1. **Push your code** to your GitHub repository.
+2. **Log in to Vercel** (connect with GitHub).
+3. Click **Add New > Project**, and import the repository.
+4. Add the environment variables under project settings:
+   - `GEMINI_API_KEY`: Your Gemini API key.
+5. Click **Deploy**. Vercel will compile the frontend and automatically run the edge/serverless functions.
 
 ---
 
