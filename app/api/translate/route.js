@@ -69,7 +69,7 @@ export async function POST(request) {
       });
     }
 
-    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    const model = process.env.GEMINI_MODEL || "gemini-1.5-flash";
     const langName = SUPPORTED_LANGUAGES[targetLang];
 
     // 4. Construct prompt — role-specific stadium terminology is critical for accuracy
