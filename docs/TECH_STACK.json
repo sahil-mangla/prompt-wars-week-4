@@ -17,21 +17,21 @@
     "backend": {
       "runtime": "Next.js API Routes (Node.js Edge-compatible)",
       "endpoints": [
-        "POST /api/translate — Gemini 2.5 Flash multilingual translation",
+        "POST /api/translate — Gemini 1.5 Flash multilingual translation",
         "GET /api/health — System health check (key presence, sync mode)"
       ],
       "database": "Firebase Firestore (real-time sync) with BroadcastChannel+localStorage fallback",
       "security": "GEMINI_API_KEY server-side only, CSP headers, X-Frame-Options: DENY"
     },
     "ai_layer": {
-      "model": "Gemini 2.5 Flash (via REST API)",
+      "model": "Gemini 1.5 Flash (via REST API)",
       "usage": "Stadium-specific multilingual instruction generation (PT, ES, AR, FR, DE, JA, ZH, HI)",
       "prediction_engine": "SentinelAI — custom signal-weighted confidence scoring with cross-validation heuristic",
-      "signals": ["Crowd flow velocity", "Ticket scan rate surge", "Social media sentiment", "Weather/heat index", "Historical incident pattern match"]
+      "signals": ["Crowd flow velocity", "Ticket scan rate surge", "Weather/heat index", "Historical incident pattern match"]
     },
     "deployment": {
-      "platform": "Firebase App Hosting (frontend) / Firebase Functions (API)",
-      "ci_cd": "GitHub push → Firebase auto-deploy",
+      "platform": "Vercel (Zero-cost, Edge-compatible Next.js Serverless)",
+      "ci_cd": "GitHub Actions (CI/CD push validation & Vercel deployment)",
       "environment": "Environment variables managed via .env.local, never committed"
     },
     "performance_architecture": {

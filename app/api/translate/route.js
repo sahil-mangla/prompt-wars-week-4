@@ -137,7 +137,7 @@ Return ONLY the translated text. No preamble, no explanation.`;
     // 6. Return translated result with metadata
     return Response.json({
       translatedText,
-      confidence: 0.95, // Gemini 2.5 Flash achieves ~95% on stadium terminology
+      confidence: 0.95, // Gemini 1.5 Flash achieves ~95% on stadium terminology
       model,
       targetLang,
     });

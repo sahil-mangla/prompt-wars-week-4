@@ -51,7 +51,7 @@ Traditional stadium operations are **purely reactive**. Crowd surges, gate bottl
 │  └──────────────────────────────────────────────────────────┘   │
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │            Gemini 2.5 Flash (Server-side, Secure)         │   │
+│  │            Gemini 1.5 Flash (Server-side, Secure)         │   │
 │  │   POST /api/translate → Multilingual task instructions    │   │
 │  │   Supported: PT, ES, AR, FR, DE, JA, ZH, HI, EN          │   │
 │  └──────────────────────────────────────────────────────────┘   │
@@ -74,13 +74,13 @@ Traditional stadium operations are **purely reactive**. Crowd surges, gate bottl
 ## Key Technical Contributions
 
 ### 1. Predictive Signal Engine (SentinelAI)
-- 5-signal ensemble model (crowd flow, scan rate, social sentiment, weather, historical)
+- 4-signal ensemble model (crowd flow, scan rate, weather, historical)
 - Cross-validated confidence scoring: < 3 signals triggers a 0.5× variance penalty to prevent false alerts
-- Achieves **81% confidence** from the Gate 7 scenario with full 5-signal confirmation
+- Achieves **81% confidence** from the Gate 7 scenario with full 4-signal confirmation
 - **3-minute predictive lead time** vs. 0-minute reactive baseline (literature gap)
 
 ### 2. Sub-5-Second Multilingual Dispatch
-- Gemini 2.5 Flash server-side proxy route (`/api/translate`)
+- Gemini 1.5 Flash server-side proxy route (`/api/translate`)
 - Stadium-specific prompt engineering preserving gate numbers, zone codes, and technical terms
 - Role-aware context: volunteer instructions include their specific assigned zone
 - **5s dispatch latency** vs. 480s manual radio baseline (literature gap)

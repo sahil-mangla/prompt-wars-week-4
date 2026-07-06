@@ -58,13 +58,12 @@ Full citations: [`PAPER_REFERENCES.bib`](./PAPER_REFERENCES.bib) · Full metrics
 │                                                                  │
 │  ─────────────────────────────────────────────────────────────   │
 │                                                                  │
-│  SentinelAI Engine (Local)            Gemini 2.5 Flash           │
+│  SentinelAI Engine (Local)            Gemini 1.5 Flash           │
 │  Transparent Heuristic Engine         POST /api/analyze          │
-│  ┌ Crowd Flow (35%)                   POST /api/translate        │
-│  ├ Scan Rate Surge (25%)              Server-side only           │
-│  ├ Social Sentiment (20%)             GEMINI_API_KEY never        │
-│  ├ Weather/Heat Index (10%)           exposed to client bundle   │
-│  └ Historical Pattern (10%)                                      │
+│  ┌ Crowd Flow (45%)                   POST /api/translate        │
+│  ├ Scan Rate Surge (35%)              Server-side only           │
+│  ├ Weather/Heat Index (10%)           GEMINI_API_KEY never       │
+│  └ Historical Pattern (10%)           exposed to client bundle   │
 │                                                                  │
 │  Cross-validation: < 3 signals → 0.5× | ≥ 4 signals → 1.1×     │
 │                                                                  │
@@ -77,12 +76,12 @@ Full citations: [`PAPER_REFERENCES.bib`](./PAPER_REFERENCES.bib) · Full metrics
 
 ### SentinelAI — Predictive Crowd Intelligence
 - **Transparent Local Heuristic Engine**: Calculates confidence scores based on a clear, programmatically defined formula in `lib/simulation-engine.js` rather than an opaque ML "black-box" model.
-- **5-signal ensemble**: crowd flow velocity, ticket scan rate, social media sentiment, heat index, historical pattern match
+- **4-signal ensemble**: crowd flow velocity, ticket scan rate, heat index, historical pattern match
 - **Cross-validated confidence scoring**: fewer than 3 independent signals active → confidence halved (false alert prevention)
 - **3-minute predictive lead time** before crowd incidents form
-- **Dynamic Operational Insights (`POST /api/analyze`)**: Generates real-time incident explanations, actionable dispatch plans, and sustainability impact (eco-impact) statements based on live telemetry using Gemini 2.5 Flash.
+- **Dynamic Operational Insights (`POST /api/analyze`)**: Generates real-time incident explanations, actionable dispatch plans, and sustainability impact (eco-impact) statements based on live telemetry using Gemini 1.5 Flash.
 
-### Multilingual Dispatch (Gemini 2.5 Flash)
+### Multilingual Dispatch (Gemini 1.5 Flash)
 - Secure server-side proxy at `POST /api/translate` and `POST /api/analyze` — API key never in client bundle
 - Dynamic translations of SentinelAI operational insights and action plans.
 - 9 languages supported: PT, ES, AR, FR, DE, JA, ZH, HI, EN
@@ -274,7 +273,7 @@ npm run test
 | Framework | Next.js 16.2 (App Router) | Static pages + server API routes for key isolation |
 | Styling | Vanilla CSS (OKLCH/HSL tokens) | No runtime overhead, full design control |
 | Font | Atkinson Hyperlegible via next/font | Zero FOIT, WCAG-grade legibility |
-| AI | Gemini 2.5 Flash | Best-in-class stadium terminology accuracy |
+| AI | Gemini 1.5 Flash | Best-in-class stadium terminology accuracy |
 | Database | Firebase Firestore + LocalSync fallback | Works in demo without credentials |
 | State sync | BroadcastChannel + localStorage | Real-time cross-tab without WebSocket server |
 | Prediction | Custom SentinelAI ensemble | Cross-validated, false-alert resistant |
