@@ -25,5 +25,8 @@
     "jest-environment-jsdom": "^30.4.1",
     "node-mocks-http": "^1.17.2",
     "tailwindcss": "^4"
+  },
+  "overrides": {
+    "glob": "^13.0.6"
   }
 }
