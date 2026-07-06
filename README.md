@@ -105,7 +105,8 @@ Full citations: [`PAPER_REFERENCES.bib`](./PAPER_REFERENCES.bib) · Full metrics
 
 ### Transport & Sustainability Layer
 - Fan **Transport tab**: Metro/shuttle wait times with eco-friendly flagging, wheelchair accessibility indicators
-- Fan **Eco tab**: Live stadium sustainability KPIs (renewable energy %, waste recycled %, transit usage %)
+- **Google Maps Directions Redirect**: Integrated transit button next to each route in the Fan App that redirects fans to Google Maps Directions in transit mode pointing directly to AT&T Stadium (or Gate 7B for accessible shuttles)
+- **Eco Status Pills**: Live stadium sustainability KPIs (Renewable Energy 78%, Waste Recycled 62%, Public Transit 44%) are showcased as a sleek row of horizontal badges in the top bar of the Fan App
 - Volunteer eco-tip: crowd redirection saves 18% HVAC energy in redirected sector
 
 ### Security-First Engineering
