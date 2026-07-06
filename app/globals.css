@@ -296,6 +296,15 @@ select:focus-visible {
   50% { opacity: 0.7; }
 }
 
+/* Spinner animation for loading states */
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
 .alert-pulse {
   animation: pulse 2s ease-in-out infinite;
 }

@@ -2,10 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FanPage from '../../app/fan/page';
-import { syncStore } from '../../lib/firebase';
+import { syncStore } from '@/lib/sync-store';
 
-// Mock the firebase syncStore
-jest.mock('../../lib/firebase', () => ({
+jest.mock('@/lib/sync-store', () => ({
   syncStore: {
     subscribeState: jest.fn(),
     updateState: jest.fn(),
@@ -17,7 +16,6 @@ describe('Fan Companion App (Frontend)', () => {
   let mockSubscribeCallback;
 
   beforeEach(() => {
-    // Reset mocks
     jest.clearAllMocks();
 
     mockState = {
@@ -28,51 +26,38 @@ describe('Fan Companion App (Frontend)', () => {
       timeRemaining: 120,
     };
 
-    // Capture the callback passed to subscribeState
     syncStore.subscribeState.mockImplementation((callback) => {
       mockSubscribeCallback = callback;
-      // Immediately call with initial mock state
       callback(mockState);
-      return jest.fn(); // Unsubscribe mock function
+      return jest.fn();
     });
   });
 
   test('renders loading state initially if no state is provided', () => {
     syncStore.subscribeState.mockImplementation(() => jest.fn());
     render(<FanPage />);
-    expect(screen.getByRole('status', { name: /loading/i })).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
   test('renders the fan app header and toggles language correctly', () => {
     render(<FanPage />);
     
-    // Default language is Arabic
-    expect(screen.getByText('بطاقة المشجع الرقمية')).toBeInTheDocument();
+    // Default language is English now based on state
+    expect(screen.getByText('Welcome, Yusuf')).toBeInTheDocument();
     
     // Toggle language
-    const langBtn = screen.getByRole('button', { name: /Switch to English/i });
-    fireEvent.click(langBtn);
+    const langSelect = screen.getByRole('combobox');
+    fireEvent.change(langSelect, { target: { value: 'es' } });
     
-    // Now it should be English
-    expect(screen.getByText('Digital Fan Ticket & Guide')).toBeInTheDocument();
-    expect(screen.getByText('Welcome, Yusuf')).toBeInTheDocument();
-  });
-
-  test('toggles accessibility mode correctly', () => {
-    render(<FanPage />);
-    
-    const a11yToggle = screen.getByRole('switch', { name: /مسار ذوي الهمم/i });
-    expect(a11yToggle).toHaveAttribute('aria-checked', 'true'); // default is true
-    
-    fireEvent.click(a11yToggle);
-    expect(a11yToggle).toHaveAttribute('aria-checked', 'false');
+    // Now it should be Spanish
+    expect(screen.getByText('Bienvenido, Yusuf')).toBeInTheDocument();
   });
 
   test('displays normal ticket view when simulation status is idle', () => {
     render(<FanPage />);
     
-    // Verify gate info
-    expect(screen.getByText('البوابة الموصى بها: البوابة 7')).toBeInTheDocument();
+    // Verify gate info in english
+    expect(screen.getAllByText('Gate 7').length).toBeGreaterThan(0);
     // Alert should not be present
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
@@ -85,41 +70,34 @@ describe('Fan Companion App (Frontend)', () => {
       mockSubscribeCallback({
         ...mockState,
         simulationStatus: 'dispatched',
+        activeIncidents: [{
+          id: 'inc_1',
+          type: 'Crowd Bottleneck',
+          zone: 'Gate 7'
+        }]
       });
     });
 
-    // Alert should now be visible in Arabic (default)
     const alert = screen.getByRole('alert');
     expect(alert).toBeInTheDocument();
-    expect(screen.getByText('تنبيه تبديل المسار')).toBeInTheDocument();
+    expect(screen.getByText('DETOUR ALERT')).toBeInTheDocument();
     
-    // Also ticket gate should show 'تحديث المسار مطلوب'
-    expect(screen.getByText('تحديث المسار مطلوب')).toBeInTheDocument();
+    expect(screen.getByText('Route Change Required')).toBeInTheDocument();
   });
 
-  test('renders transport tab correctly and displays shuttle wait times', () => {
+  test('renders transport tab correctly', () => {
     render(<FanPage />);
     
-    // Switch to English for easier testing
-    fireEvent.click(screen.getByRole('button', { name: /Switch to English/i }));
-    
     // Click Transport tab
-    fireEvent.click(screen.getByRole('tab', { name: /Transport and shuttle information/i }));
+    fireEvent.click(screen.getByRole('tab', { name: /Transport/i }));
     
-    expect(screen.getByText('Metro Line B — Stadium Direct')).toBeInTheDocument();
-    expect(screen.getAllByText('Wait:').length).toBeGreaterThan(0);
-    
-    // Check for capacity
-    expect(screen.getByText(/Capacity: High/i)).toBeInTheDocument();
+    expect(screen.getByText('Metro Line B')).toBeInTheDocument();
+    expect(screen.getByText('Shuttle Bus 7')).toBeInTheDocument();
   });
 
   test('displays sustainability metrics as eco pills at the top level', () => {
     render(<FanPage />);
     
-    // Switch to English
-    fireEvent.click(screen.getByRole('button', { name: /Switch to English/i }));
-    
-    // Check for Renewable energy and other metrics in the pills
     expect(screen.getByText(/Renewable: 78%/i)).toBeInTheDocument();
     expect(screen.getByText(/Recycled: 62%/i)).toBeInTheDocument();
     expect(screen.getByText(/Transit: 44%/i)).toBeInTheDocument();

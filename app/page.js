@@ -2,8 +2,10 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { syncStore } from "../lib/firebase";
-import { SimulationController } from "../lib/simulation-engine";
+import { syncStore } from "@/lib/sync-store";
+import { SimulationController } from "@/lib/simulation-engine";
+import { LoadingScreen } from "@/app/_components/LoadingScreen";
+import { OperatorLogViewer } from "@/app/_components/OperatorLogViewer";
 
 export default function LauncherPage() {
   const [state, setState] = useState(null);
@@ -285,38 +287,7 @@ export default function LauncherPage() {
         </div>
       </div>
 
-      {/* Signal Logs */}
-      <section className="card" aria-label="Simulation signal logs">
-        <h3
-          style={{
-            marginBottom: "var(--space-md)",
-            borderBottom: "1px solid var(--color-border)",
-            paddingBottom: "var(--space-sm)",
-          }}
-        >
-          Simulated Signal Logs
-        </h3>
-        <div
-          style={{
-            maxHeight: "150px",
-            overflowY: "auto",
-            fontFamily: "monospace",
-            fontSize: "var(--text-xs)",
-            lineHeight: "1.6",
-          }}
-          aria-live="polite"
-          role="log"
-        >
-          {state.operatorLog.map((log, index) => (
-            <div key={index} style={{ marginBottom: "var(--space-xs)" }}>
-              <span style={{ color: "var(--color-foreground-muted)" }}>
-                [{log.time}]
-              </span>{" "}
-              {log.text}
-            </div>
-          ))}
-        </div>
-      </section>
+      <OperatorLogViewer logs={state.operatorLog} />
     </div>
   );
 }

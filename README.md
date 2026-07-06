@@ -199,20 +199,29 @@ Open these three URLs simultaneously to experience the full scenario:
 ```
 matchmind/
 ├── app/
+│   ├── _components/               # Shared components (LoadingScreen, OperatorLogViewer)
 │   ├── api/
 │   │   ├── health/route.js        # GET /api/health — system status
 │   │   └── translate/route.js     # POST /api/translate — Gemini proxy
-│   ├── fan/page.js                # Fan Companion App (Arabic/English, tabs)
-│   ├── operator/page.js           # Operator Command Dashboard
-│   ├── volunteer/page.js          # Volunteer Mobile PWA
-│   ├── globals.css                # OKLCH/HSL base styles
+│   ├── fan/
+│   │   ├── _components/           # Fan-specific UI (DetourAlert, EcoPillStrip, etc.)
+│   │   └── page.js                # Fan Companion App (Arabic/English, tabs)
+│   ├── operator/
+│   │   ├── _components/           # Operator-specific UI (IncidentPanel, TelemetrySignalCard, etc.)
+│   │   └── page.js                # Operator Command Dashboard
+│   ├── volunteer/
+│   │   ├── _components/           # Volunteer-specific UI (TaskCard, EmptyState)
+│   │   └── page.js                # Volunteer Mobile PWA
+│   ├── globals.css                # OKLCH/HSL base styles and CSS tokens
 │   ├── layout.js                  # Root layout, next/font, metadata, viewport
 │   └── page.js                    # Launcher / simulation controls
 ├── lib/
-│   ├── firebase.js                # Firestore + BroadcastChannel SyncStore
-│   └── simulation-engine.js       # SentinelAI signal engine + timeline
+│   ├── analysis-service.js        # Core logic for analyzing telemetry
+│   ├── constants.js               # Centralized magic strings, thresholds, translations
+│   ├── firebase.js                # Firestore backend hook
+│   ├── simulation-engine.js       # SentinelAI signal engine + timeline
+│   └── sync-store.js              # BroadcastChannel + localStorage state sync
 ├── design-system/
-│   ├── CSS_TOKENS.css             # Main styling tokens
 │   └── DESIGN_SYSTEM.md           # Color tokens, typography, spacing, design bans
 ├── docs/
 │   ├── CLAUDE.md                  # AI Dev Instructions

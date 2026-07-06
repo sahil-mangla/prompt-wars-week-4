@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import VolunteerPage from '../../app/volunteer/page';
-import { syncStore } from '../../lib/firebase';
+import { syncStore } from '@/lib/sync-store';
 
-jest.mock('../../lib/firebase', () => ({
+jest.mock('@/lib/sync-store', () => ({
   syncStore: {
     subscribeState: jest.fn(),
     updateState: jest.fn(),
