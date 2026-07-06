@@ -316,6 +316,7 @@ export default function FanPage() {
 
         {/* Tab navigation */}
         <nav
+          role="tablist"
           aria-label="Fan portal sections"
           style={{
             display: "flex",
@@ -324,6 +325,7 @@ export default function FanPage() {
           }}
         >
           <button
+            role="tab"
             style={tabStyle("ticket")}
             onClick={() => setActiveTab("ticket")}
             aria-selected={activeTab === "ticket"}
@@ -332,6 +334,7 @@ export default function FanPage() {
             {language === "ar" ? "التذكرة" : "Ticket"}
           </button>
           <button
+            role="tab"
             style={tabStyle("transport")}
             onClick={() => setActiveTab("transport")}
             aria-selected={activeTab === "transport"}

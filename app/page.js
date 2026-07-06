@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { syncStore } from "../lib/firebase";
 import { SimulationController } from "../lib/simulation-engine";
 
 export default function LauncherPage() {
   const [state, setState] = useState(null);
-  const [simulation, setSimulation] = useState(null);
+  const simulationRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = syncStore.subscribeState((newState) => {
@@ -15,7 +15,7 @@ export default function LauncherPage() {
     });
 
     const controller = new SimulationController();
-    setSimulation(controller);
+    simulationRef.current = controller;
 
     return () => {
       unsubscribe();
@@ -44,11 +44,11 @@ export default function LauncherPage() {
   }
 
   const handleTriggerSurge = () => {
-    if (simulation) simulation.triggerGate7Surge(state);
+    if (simulationRef.current) simulationRef.current.triggerGate7Surge(state);
   };
 
   const handleReset = async () => {
-    if (simulation) simulation.stop();
+    if (simulationRef.current) simulationRef.current.stop();
     await syncStore.resetState();
   };
 

@@ -104,7 +104,7 @@ describe('Fan Companion App (Frontend)', () => {
     fireEvent.click(screen.getByRole('button', { name: /Switch to English/i }));
     
     // Click Transport tab
-    fireEvent.click(screen.getByRole('button', { name: /Transport and shuttle information/i }));
+    fireEvent.click(screen.getByRole('tab', { name: /Transport and shuttle information/i }));
     
     expect(screen.getByText('Metro Line B — Stadium Direct')).toBeInTheDocument();
     expect(screen.getAllByText('Wait:').length).toBeGreaterThan(0);
