@@ -1,4 +1,4 @@
-import { GATE_ZONES, SIGNAL_THRESHOLDS } from "@/lib/constants";
+import { GATE_ZONES, SIGNAL_THRESHOLDS } from "@/constants";
 
 export function TelemetrySignalCard({ state }) {
   const activeIncident = state.activeIncidents[0];

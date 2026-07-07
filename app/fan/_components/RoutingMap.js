@@ -1,4 +1,4 @@
-export function RoutingMap({ isDispatched, t }) {
+export function RoutingMap({ isDispatched, t, accessibilityMode }) {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ export function RoutingMap({ isDispatched, t }) {
       aria-label={t.routingMap}
       role="img"
     >
-      {/* SVG rendering identical to before */}
+      {/* SVG rendering with dynamic accessibility overlay */}
       <svg
         viewBox="0 0 400 250"
         style={{ width: "100%", height: "auto" }}
@@ -38,6 +38,14 @@ export function RoutingMap({ isDispatched, t }) {
             <circle cx="150" cy="200" r="8" fill="var(--color-primary)" />
             <text x="140" y="195" fill="var(--color-primary)" fontSize="12" fontWeight="bold" textAnchor="end">{t.gate7}</text>
           </>
+        )}
+
+        {/* Accessibility elevator marker */}
+        {accessibilityMode && (
+          <g aria-label="Wheelchair accessible elevator marker">
+            <circle cx="150" cy={isDispatched ? 74 : 220} r="10" fill="var(--color-primary)" />
+            <text x="150" y={isDispatched ? 78 : 224} fill="#ffffff" fontSize="12" textAnchor="middle" fontWeight="bold" aria-hidden="true">♿</text>
+          </g>
         )}
       </svg>
       <div style={{ textAlign: "center", marginTop: "var(--space-sm)", fontSize: "var(--text-sm)", color: "var(--color-text)" }}>

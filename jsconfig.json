@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "paths": {
+      "@/constants": ["./lib/constants/index"],
+      "@/constants/*": ["./lib/constants/*"],
       "@/*": ["./*"]
     }
   }

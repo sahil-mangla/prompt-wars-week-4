@@ -216,25 +216,29 @@ matchmind/
 │   ├── layout.js                  # Root layout, next/font, metadata, viewport
 │   └── page.js                    # Launcher / simulation controls
 ├── lib/
-│   ├── analysis-service.js        # Core logic for analyzing telemetry
-│   ├── constants.js               # Centralized magic strings, thresholds, translations
-│   ├── firebase.js                # Firestore backend hook
+│   ├── constants/
+│   │   ├── index.js               # Re-exports all constants (import from @/constants)
+│   │   ├── telemetry.js           # Signal thresholds, gate/zone/volunteer IDs
+│   │   ├── simulation.js          # Simulation timing defaults
+│   │   └── translations.js        # Multilingual UI string bundles
+│   ├── services/
+│   │   └── analysis-service.js    # Core logic for fetching SentinelAI insights
+│   ├── firebase.js                # Firestore backend initialisation
+│   ├── local-sync.js              # BroadcastChannel + localStorage state sync
 │   ├── simulation-engine.js       # SentinelAI signal engine + timeline
-│   └── sync-store.js              # BroadcastChannel + localStorage state sync
-├── design-system/
-│   └── DESIGN_SYSTEM.md           # Color tokens, typography, spacing, design bans
+│   └── sync-store.js              # Unified state store (Firestore or LocalSync)
 ├── docs/
-│   ├── CLAUDE.md                  # AI Dev Instructions
+│   ├── DESIGN_SYSTEM.md           # Color tokens, typography, spacing, design bans
 │   ├── PROJECT_BRIEF.md           # Full submission document
 │   ├── ROADMAP.json               # Task-wise implementation roadmap
-│   └── TECH_STACK.json            # Architecture decisions, performance guards
+│   ├── TECH_STACK.json            # Architecture decisions, performance guards
+│   ├── CHECKLISTS.json            # Design system & security compliance checklists
+│   ├── EVALUATION_PLAN.json       # Metrics, baselines, and verification methods
+│   └── PAPER_REFERENCES.bib       # Academic citations for research claims
 ├── reports/
 │   ├── A11Y_REPORT.json           # WCAG 2.1 AA accessibility audit
-│   ├── EVALUATION_PLAN.json       # Metrics and baselines
-│   ├── PAPER_REFERENCES.bib       # Citations for research claims
 │   ├── PERFORMANCE_REPORT.json    # CWV analysis
-│   ├── QA_REPORT.json             # Test results
-│   └── CHECKLISTS.json            # Checklists
+│   └── QA_REPORT.json             # End-to-end test results
 ├── tests/
 │   ├── api/                       # Backend endpoint tests (Health, Translation)
 │   ├── frontend/                  # React component tests (Jest + RTL)

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { syncStore } from "@/lib/sync-store";
-import { VOLUNTEER_TRANSLATIONS } from "@/lib/constants";
+import { VOLUNTEER_TRANSLATIONS } from "@/constants";
 import { TaskCard } from "./_components/TaskCard";
 import { EmptyState } from "./_components/EmptyState";
 

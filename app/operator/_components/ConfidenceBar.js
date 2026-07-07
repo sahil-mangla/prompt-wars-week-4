@@ -1,4 +1,4 @@
-import { CONFIDENCE_THRESHOLDS } from "@/lib/constants";
+import { CONFIDENCE_THRESHOLDS } from "@/constants";
 
 export function ConfidenceBar({ confidence }) {
   let color = "var(--color-primary)"; // default blue/primary

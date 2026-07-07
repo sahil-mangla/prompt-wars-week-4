@@ -11,6 +11,27 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "**/lib/constants/*",
+                "**/constants/*",
+                "!**/lib/constants/index",
+                "!**/constants/index",
+              ],
+              message:
+                "Please import constants from '@/lib/constants' or '@/constants' directly rather than from sub-modules to keep imports clean and decoupled.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

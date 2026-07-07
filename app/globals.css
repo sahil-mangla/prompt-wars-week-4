@@ -13,6 +13,9 @@
   --color-border: oklch(85% 0.02 240);        /* Soft Border */
   --color-foreground: oklch(20% 0.03 240);    /* Deep Charcoal */
   --color-foreground-muted: oklch(45% 0.03 240);
+  --color-text: var(--color-foreground);
+  --color-text-muted: var(--color-foreground-muted);
+  --color-bg: var(--color-surface);
 
   /* Alert States */
   --color-danger: oklch(60% 0.25 25);         /* High priority red */
@@ -75,6 +78,9 @@
   --color-border: oklch(25% 0.03 240);        /* Hard border */
   --color-foreground: oklch(96% 0.01 240);    /* Clean white */
   --color-foreground-muted: oklch(75% 0.02 240);
+  --color-text: var(--color-foreground);
+  --color-text-muted: var(--color-foreground-muted);
+  --color-bg: var(--color-surface);
 
   --color-danger: oklch(55% 0.22 25);
   --color-warning: oklch(70% 0.18 85);
@@ -340,5 +346,52 @@ select:focus-visible {
     scroll-behavior: auto !important;
     transition-duration: 0s !important;
     transition-delay: 0s !important;
+  }
+}
+
+/* Fan App Wrapper to style and center the mockup viewport on desktop screens */
+.fan-app-wrapper {
+  background-color: oklch(92% 0.01 240);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) 0;
+}
+
+@media (max-width: 480px) {
+  .fan-app-wrapper {
+    background-color: var(--color-background);
+    padding: 0;
+  }
+}
+
+/* Mobile App Wrapper to center and style the PWA screens */
+.mobile-app {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  min-height: 700px;
+  max-height: 850px;
+  border: 1px solid var(--color-border);
+  padding: var(--space-lg);
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .mobile-app {
+    max-width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    padding: var(--space-md);
   }
 }

@@ -10,41 +10,55 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# testing & coverage
 /coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-*.log
 test_output.txt
 
-# Local npm cache (used to bypass permission issues during install)
-.npm-cache/
+# next.js build and swc compilation cache
+/.next/
+/out/
+/.swc/
 
-# AI development artifacts — do not expose in public repo
-CLAUDE.md
-AGENTS.md
+# production build
+/build
 
-# debug
+# local env files
+.env*
+!.env.example
+!.env.local.example
+
+# vercel
+.vercel
+
+# typescript compiler cache
+*.tsbuildinfo
+next-env.d.ts
+
+# debug logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# vercel
-.vercel
+# IDE/Editor settings (VS Code, WebStorm, etc.)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# local package cache
+.npm-cache/
+
+# AI development instructions (keep private)
+CLAUDE.md
+AGENTS.md
